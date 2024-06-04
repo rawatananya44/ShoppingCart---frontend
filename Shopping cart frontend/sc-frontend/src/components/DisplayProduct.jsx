@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { listProducts } from "../services/ProductService";
 import Cart from "./Cart";
 
 
 const DisplayProductComponent = () => {
   const [displayProduct, setDisplayProduct] = useState([]);
-
-  const navigator = useNavigate();
 
   useEffect(() => {
     displayAllProducts();
@@ -61,7 +58,6 @@ const DisplayProductComponent = () => {
           {displayProduct.map((product, num) => (
             <tr key={product.prodID}>
               <td className='text-center' style={{verticalAlign: 'middle'}}>{num+1}</td>
-              {/* <td>{product.prodID}</td> */}
               <td>{product.name}</td>
               <td>{product.category}</td>
               <td>{product.description}</td>
