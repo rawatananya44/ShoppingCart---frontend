@@ -86,7 +86,7 @@ const ProductList = () => {
                 {product.category}
               </td>
               <td className="text-center" style={{ verticalAlign: "middle" }}>
-                {product.price}
+                Rs. {product.price}
               </td>
               <td style={{ verticalAlign: "middle" }}>{product.description}</td>
               <td className="text-center" style={{ verticalAlign: "middle" }}>
