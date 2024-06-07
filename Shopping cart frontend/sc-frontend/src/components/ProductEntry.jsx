@@ -14,7 +14,7 @@ const ProductEntry = () => {
 
   const { prodID } = useParams();
 
-  const navigator = useNavigate();
+  const navigator = useNavigate(); 
 
   useEffect(() => {
     if (prodID) {

@@ -7,7 +7,8 @@ const Home = () => {
     <div  >
       <div >
       <img src={homeImage} style={{height: '100%', width:'100%', backgroundRepeat:'repeat-y', backgroundSize:'cover'}} alt=""/>
-      </div>        
+      </div>   
+      <h1>hi</h1>     
     </div>
   )
 }
