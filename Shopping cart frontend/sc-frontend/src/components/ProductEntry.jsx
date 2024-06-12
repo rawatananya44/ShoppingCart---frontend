@@ -3,6 +3,7 @@ import {
   createProduct,
   getProduct,
   updateProduct,
+  listProducts,
 } from "../services/ProductService";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
@@ -14,7 +15,7 @@ const ProductEntry = () => {
 
   const { prodID } = useParams();
 
-  const navigator = useNavigate(); 
+  const navigator = useNavigate();
 
   useEffect(() => {
     if (prodID) {
@@ -42,6 +43,8 @@ const ProductEntry = () => {
           console.error(error);
         });
     } else {
+
+      
       createProduct(input)
         .then((response) => {
           console.log(response.data);
@@ -55,16 +58,30 @@ const ProductEntry = () => {
 
   const validateForm = Yup.object({
     name: Yup.string()
-      .max(200, "Must be within 200 characters").required("Name is required"),
+      .max(50, "Must be within 50 characters")
+      .required("Name is required")
+      .min(3, "Must have minimum 3 characters"),
     category: Yup.string()
-      .max(20, "Must be within 20 characters").required("Category is required"),
+      .max(20, "Must be within 20 characters")
+      .required("Category is required")
+      .min(2, "Must have minimum 2 characters"),
     price: Yup.number()
-      .min(0, "Should be greater than zero").required("Price is required").typeError("Price is required"),
+      .min(0, "Price cannot be negative")
+      .max(10000000, "Cannot be greater than 1Cr")
+      .required("Price is required")
+      .typeError("Price is required"),
     description: Yup.string()
-      .max(1000, "Must be within 1000 characters").required("Description is required"),
+      .max(250, "Must be within 250 characters")
+      .min(3, "Must have minimum 3 characters")
+      .required("Description is required"),
     stockCount: Yup.number()
-      .min(1, "Must be greater than 0").required("Stock Count is required").typeError("Stock Count is required"),
-    inStock: Yup.string("Enter either true or false").required("inStock is required")
+      .min(1, "Must be greater than 0")
+      .max(50000, "Capacity beyond limit of 50,000")
+      .required("Stock Count is required")
+      .typeError("Stock Count is required"),
+    inStock: Yup.string("Enter either true or false").required(
+      "inStock is required"
+    ),
   });
 
   const {
@@ -111,16 +128,35 @@ const ProductEntry = () => {
 
               <div className="form-group mb-2">
                 <label className="form-label">Category</label>
-                <input
-                  type="text"
-                  placeholder="Enter product category"
-                  name="category"
-                  className={`form-control ${
+                <select className={`form-control ${
                     errors.category ? "is-invalid" : ""
-                  }`}
-                  id="category"
-                  {...register("category")}
-                ></input>
+                  }`} {...register("category")}>
+                    <option selected value="" >Select Category</option>
+                  <option value="Television" >
+                  Television
+                  </option>
+                  <option value="SmartWatch"  >
+                  SmartWatch
+                  </option>
+                  <option value="Mobile"  >
+                  Mobile
+                  </option>
+                  <option value="Laptop"  >
+                  Laptop
+                  </option>
+                  <option value="Printer"  >
+                  Printer
+                  </option>
+                  <option value="Mouse"  >
+                  Mouse
+                  </option>
+                  <option value="Desktop"  >
+                  Desktop
+                  </option>
+
+
+                </select>
+                
                 {errors.category && (
                   <div className="invalid-feedback">
                     {errors.category.message}
@@ -132,6 +168,8 @@ const ProductEntry = () => {
                 <label className="form-label">Price</label>
                 <input
                   type="number"
+                  step="0.01"
+                  min={0.0}
                   placeholder="Enter product price"
                   name="price"
                   className={`form-control ${errors.price ? "is-invalid" : ""}`}
@@ -168,6 +206,7 @@ const ProductEntry = () => {
                   type="number"
                   placeholder="Enter product stock count"
                   name="stockCount"
+                  min={0}
                   className={`form-control ${
                     errors.stockCount ? "is-invalid" : ""
                   }`}
@@ -183,31 +222,38 @@ const ProductEntry = () => {
 
               <div className="form-group mb-2">
                 <label className="form-label">In Stock</label>
-                <input
-                  type="text"
-                  placeholder="Whether in stock"
-                  name="inStock"
+                <select
                   className={`form-control ${
                     errors.inStock ? "is-invalid" : ""
-                  }`}
-                  id="inStock"
-                  {...register("inStock")}
-                ></input>
+                  }`} {...register("inStock")}
+                >
+                  <option selected value="" >Select In Stock</option>
+                  <option value="True" >
+                    True
+                  </option>
+                  <option value="False" >
+                    False
+                  </option>
+                </select>
                 {errors.inStock && (
                   <div className="invalid-feedback">
                     {errors.inStock.message}
                   </div>
                 )}
               </div>
-                <div className=" d-flex ">
-              <button
-                type="submit"
-                className="btn btn-light"
-                disabled={isSubmitting}
-                style={{backgroundColor: "#C8A18F", display: "flex", margin:'auto'}}
-              >
-                Add
-              </button>
+              <div className=" d-flex ">
+                <button
+                  type="submit"
+                  className="btn btn-light"
+                  disabled={isSubmitting}
+                  style={{
+                    backgroundColor: "#C8A18F",
+                    display: "flex",
+                    margin: "auto",
+                  }}
+                >
+                  Add
+                </button>
               </div>
             </form>
           </div>

@@ -58,8 +58,7 @@ const HeaderComponent = ({}) => {
                   >
                     User
                   </a>
-                </li>
-                
+                </li>                
               </ul>
             </div>
           </div>

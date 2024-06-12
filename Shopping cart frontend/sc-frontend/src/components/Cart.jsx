@@ -22,6 +22,9 @@ const Cart = ({ cart1 }) => {
           .map((item) => item.price)
           .reduce((total, currValue) => total + currValue, 0)}
       </span>
+      <button>
+        
+      </button>
       
     </div>
   );

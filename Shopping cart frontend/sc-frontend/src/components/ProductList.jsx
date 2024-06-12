@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { deleteProduct, listProducts } from "../services/ProductService";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -38,6 +40,16 @@ const ProductList = () => {
       .catch((error) => {
         console.error(error);
       });
+      toast.success('Deleted Successfully', {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
   }
 
   return (
@@ -93,7 +105,7 @@ const ProductList = () => {
                 {product.stockCount}
               </td>
               <td className="text-center" style={{ verticalAlign: "middle" }}>
-                {product.inStock ? "True" : "False"}
+                {product.inStock}
               </td>
               <td className="text-center">
                 <button
@@ -108,7 +120,9 @@ const ProductList = () => {
                 </button>
                 <button
                   className="btn btn-light"
-                  onClick={() => removeProduct(product.prodID)}
+                  onClick={() => {
+                    removeProduct(product.prodID);
+                  }}
                   style={{
                     marginTop: "10px",
                     verticalAlign: "middle",
@@ -122,6 +136,18 @@ const ProductList = () => {
           ))}
         </tbody>
       </table>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 };
