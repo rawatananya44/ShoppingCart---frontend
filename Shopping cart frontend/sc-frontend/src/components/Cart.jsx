@@ -2,7 +2,7 @@ import React from "react";
 import '/Users/arawat99/Desktop/Shopping cart frontend/sc-frontend/src/CSS/cartFile.css'
 
 const Cart = ({ cart1 }) => {
-  console.log(cart1);
+  
 
   return (
     <div>
@@ -22,8 +22,8 @@ const Cart = ({ cart1 }) => {
           .map((item) => item.price)
           .reduce((total, currValue) => total + currValue, 0)}
       </span>
-      <button>
-        
+      <button className="btn btn-light text-center">
+
       </button>
       
     </div>
